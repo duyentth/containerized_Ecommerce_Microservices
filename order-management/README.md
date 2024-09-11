@@ -14,6 +14,7 @@ docker run --network my-network \
   -e SPRING_DATA_MONGODB_DATABASE=order_management \
   -p 9090:9090 --name order-management rslim087/order-management
 ```
+
 ## Usage
 
 To run a container from this image, use the following command:
@@ -23,7 +24,7 @@ docker run --network my-network \
 -e PRODUCT_INVENTORY_API_HOST=http://product-inventory \
 -e PRODUCT_CATALOG_API_HOST=http://product-catalog \
 -e SHIPPING_HANDLING_API_HOST=http://shipping-and-handling \
--p 9090:9090 --name order-management rslim087/order-management
+-p 9090:9090 --name order-management dntranstudy/order-management
 ```
 
 The microservice will be accessible at `http://localhost:9090`.
@@ -66,17 +67,9 @@ To build the Docker image yourself, follow these steps:
 2. Navigate to the directory where the Dockerfile is located.
 3. Build the image using the following command:
    ```bash
-   docker build -t rslim087/order-management .
+   docker build -t dntranstudy/order-management .
    ```
 
 ## Contributing
 
 If you would like to contribute to the Order Management microservice, please follow the contributing guidelines outlined in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
-## Support
-
-For any issues or questions regarding this Docker image or the Order Management microservice, please [open an issue](https://github.com/your-repo/issues) on the GitHub repository.
