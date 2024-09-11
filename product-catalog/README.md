@@ -6,16 +6,15 @@ This Docker image provides a microservice for managing a product catalog. It all
 In version 2.0.0, the Product Catalog Microservice has been updated to include database integration, which relies on environment variables to establish a connection with a MongoDB database for storing and retrieving product data.
 
 ```
-docker run -p 3001:3001 -e MONGODB_HOST=<mongo_host> -e MONGODB_PORT=<mongo_port> -e MONGODB_DATABASE=<mongo_database> product-catalog-microservice
+docker run -p 3001:3001 -e MONGODB_HOST=<mongo_host> -e MONGODB_PORT=<mongo_port> -e MONGODB_DATABASE=<mongo_database> product-catalog
 ```
-
 
 ## Usage
 
 To run a container from this image, use the following command:
 
 ```bash
-docker run -p 3001:3001 product-catalog-microservice
+docker run -p 3001:3001 dntranstudy/product-catalog
 ```
 
 The microservice will be accessible at `http://localhost:3001`.
@@ -44,12 +43,12 @@ To enable communication between the Product Catalog microservice and other micro
 
 2. Run the Product Catalog microservice container with the `--network` flag:
    ```bash
-   docker run --network my-network -p 3001:3001 product-catalog-microservice
+   docker run --network my-network -p 3001:3001 dntranstudy/product-catalog
    ```
 
 3. Run other microservice or application containers on the same network:
    ```bash
-   docker run --network my-network -p 4000:4000 ecommerce-ui
+   docker run --network my-network -p 4000:4000 dntranstudy/ecommerce-ui
    ```
 
 By connecting the containers to the same Docker network, they can communicate with each other using their container names as hostnames.
@@ -62,18 +61,10 @@ If you want to build the Docker image yourself, follow these steps:
 2. Navigate to the directory where the Dockerfile is located.
 3. Run the following command to build the image:
    ```bash
-   docker build -t product-catalog-microservice .
+   docker build -t dntranstudy/product-catalog .
    ```
-   This command will build the Docker image using the provided Dockerfile and tag it as `product-catalog-microservice`.
+   This command will build the Docker image using the provided Dockerfile and tag it as `dntranstudy/product-catalog`.
 
 ## Contributing
 
 If you would like to contribute to this project, please follow the guidelines in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
-## Support
-
-If you encounter any issues or have questions regarding this Docker image or the Product Catalog microservice, please [open an issue](https://github.com/your-repo/issues) on the GitHub repository.
