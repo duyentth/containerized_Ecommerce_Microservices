@@ -1,0 +1,154 @@
+services:
+  ecommerce-ui:
+    image: dntranstudy/ecommerce-ui:2.0.0
+    container_name: ecommerce-ui
+    ports:
+      - "4000:4000"
+    environment:
+      - REACT_APP_PROFILE_API_HOST=http://profile-management
+      - REACT_APP_SHIPPING_API_HOST=http://shipping-and-handling
+      - REACT_APP_CONTACT_API_HOST=http://contact-support-team
+      - REACT_APP_INVENTORY_API_HOST=http://product-inventory
+      - REACT_APP_PRODUCT_API_HOST=http://product-catalog
+      - REACT_APP_ORDER_API_HOST=http://order-management
+    depends_on:
+      - profile-management
+      - shipping-and-handling
+      - contact-support-team
+      - product-inventory
+      - product-catalog
+      - order-management
+
+  profile-management:
+    image: dntranstudy/profile-management:2.1.0
+    container_name: profile-management
+    ports:
+      - "3003:3003"
+    environment:
+      - MYSQL_PORT=3306
+      - MYSQL_HOST=mysql-profile-management
+      - MYSQL_DATABASE=profile_management
+      - MYSQL_USER=profile_user
+      - MYSQL_PASSWORD=profile_password
+    depends_on:
+      - mysql-profile-management
+  mysql-profile-management:
+    image: mysql:8.0
+    container_name: mysql-profile-management
+    environment:
+      - MYSQL_DATABASE=profile_management
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_PASSWORD=profile_password
+      - MYSQL_USER=profile_user
+    volumes:
+      - mysql_profile_management_data:/var/lib/mysql
+
+  shipping-and-handling:
+    image: dntranstudy/shipping-and-handling:2.0.0
+    container_name: shipping-and-handling
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb-shipping
+    environment:
+      - MONGO_URI=mongodb://mongodb-shipping:27017/shipping
+  mongodb-shipping:
+    image: mongo
+    container_name: mongodb-shipping
+    volumes:
+      - mongodb_shipping_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=shipping
+
+  contact-support-team:
+    image: dntranstudy/contact-support-team:2.0.0
+    container_name: contact-support-team
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb-contact-support
+    environment:
+      - MONGODB_HOST=mongodb-contact-support
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=contact_support
+  mongodb-contact-support:
+    image: mongo
+    container_name: mongodb-contact-support
+    volumes:
+      - mongodb_contact_support_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=contact_support
+
+  product-inventory:
+    image: dntranstudy/product-inventory:2.0.0
+    container_name: product-inventory
+    ports:
+      - "3002:3002"
+    environment:
+      - POSTGRES_HOST=postgres-product-inventory
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=product_inventory
+      - POSTGRES_USER=inventory_user
+      - POSTGRES_PASSWORD=inventory_password
+    depends_on:
+      - postgres-product-inventory
+  postgres-product-inventory:
+    image: postgres
+    container_name: postgres-product-inventory
+    environment:
+      - POSTGRES_DB=product_inventory
+      - POSTGRES_USER=inventory_user
+      - POSTGRES_PASSWORD=inventory_password
+    volumes:
+      - postgres_product_inventory_data:/var/lib/postgresql/data
+
+  product-catalog:
+    image: dntranstudy/product-catalog:2.0.0
+    container_name: product-catalog
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb-product-catalog
+    environment:
+      - MONGODB_HOST=mongodb-product-catalog
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=product_catalog
+  mongodb-product-catalog:
+    image: mongo
+    container_name: mongodb-product-catalog
+    volumes:
+      - mongodb_product_catalog_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=product_catalog
+
+  order-management:
+    image: dntranstudy/order-management:2.1.0
+    container_name: order-management
+    ports:
+      - "9090:9090"
+    environment:
+      - PRODUCT_INVENTORY_API_HOST=http://product-inventory
+      - PRODUCT_CATALOG_API_HOST=http://product-catalog
+      - SHIPPING_HANDLING_API_HOST=http://shipping-and-handling
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb-order-management:27017/order_management
+    depends_on:
+      - product-inventory
+      - product-catalog
+      - shipping-and-handling
+      - mongodb-order-management
+  mongodb-order-management:
+    image: mongo
+    container_name: mongodb-order-management
+    volumes:
+      - mongodb_order_management_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=order_management
+
+volumes:
+  mongodb_contact_support_data:
+  mongodb_order_management_data:
+  mongodb_product_catalog_data:
+  postgres_product_inventory_data:
+  mysql_profile_management_data:
+  mongodb_shipping_data:
+
