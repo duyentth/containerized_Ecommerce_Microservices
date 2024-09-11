@@ -15,7 +15,7 @@ docker run -p 8080:8080 -e MONGO_URI=<mongo_uri> shipping-and-handling
 To run a container from this image, use the following command:
 
 ```bash
-docker run -p 8080:8080 shipping-and-handling
+docker run --name shipping-and-handling -p 8080:8080 dntranstudy/shipping-and-handling
 ```
 
 The microservice will be accessible at `http://localhost:8080`.
@@ -45,12 +45,12 @@ To enable communication between the Shipping and Handling microservice and other
 
 2. Run the Shipping and Handling microservice container with the `--network` flag:
   ```bash
-  docker run --network my-network -p 8080:8080 shipping-and-handling
+  docker run --name shipping-and-handling --network my-network -p 8080:8080 dntranstudy/shipping-and-handling
   ```
 
 3. Run other microservice or application containers on the same network:
   ```bash
-  docker run --network my-network -p 4000:4000 ecommerce-ui
+  docker run --name ecommerce-ui --network my-network -p 4000:4000 dntranstudy/ecommerce-ui
   ```
 
 By connecting the containers to the same Docker network, they can communicate with each other using their container names as hostnames.
@@ -63,18 +63,10 @@ If you want to build the Docker image yourself, follow these steps:
 2. Navigate to the directory where the Dockerfile is located.
 3. Run the following command to build the image:
   ```bash
-  docker build -t shipping-and-handling .
+  docker build -t dntranstudy/shipping-and-handling .
   ```
-  This command will build the Docker image using the provided Dockerfile and tag it as `shipping-and-handling`.
+  This command will build the Docker image using the provided Dockerfile and tag it as `dntranstudy/shipping-and-handling`.
 
 ## Contributing
 
 If you would like to contribute to this project, please follow the guidelines in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
-## Support
-
-If you encounter any issues or have questions regarding this Docker image or the Shipping and Handling microservice, please [open an issue](https://github.com/your-repo/issues) on the GitHub repository.
