@@ -21,7 +21,7 @@ docker run --network=my-network -p 4000:4000 \\
 -e REACT_APP_ORDER_API_HOST=http://order-management \\
 -e REACT_APP_SHIPPING_API_HOST=http://shipping-and-handling \\
 -e REACT_APP_CONTACT_API_HOST=http://contact-support-team \\
---name ecommerce-ui rslim087/ecommerce-ui
+--name ecommerce-ui dntranstudy/ecommerce-ui
 ```
 
 Replace `my-network` with the name of the Docker network where the required microservices are running. The container exposes port 4000, which you can map to a desired port on your host machine using the `-p` flag.
@@ -58,19 +58,11 @@ If you want to build the Docker image yourself, follow these steps:
 
 3. Run the following command to build the image:
    ```bash
-   docker build -t rslim087/ecommerce-ui .
+   docker build -t dntranstudy/ecommerce-ui .
    ```
 
-   This command will build the Docker image using the provided Dockerfile and tag it as `rslim087/ecommerce-ui`.
+   This command will build the Docker image using the provided Dockerfile and tag it as `dntranstudy/ecommerce-ui`.
 
 ## Contributing
 
 If you would like to contribute to this project, please follow the guidelines in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
-## Support
-
-If you encounter any issues or have questions regarding this Docker image or the e-commerce UI application, please [open an issue](https://github.com/your-repo/issues) on the GitHub repository.
