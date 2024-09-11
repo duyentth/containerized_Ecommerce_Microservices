@@ -2,11 +2,12 @@
 
 This Docker image provides a microservice for managing product inventory. It allows retrieving inventory for all products, fetching inventory for a single product by its ID, and reducing the quantity of a product when an order is placed.
 
+
 ## Version 2.0.0 Update
 In version 2.0.0, the Product Inventory Microservice has been updated to include PostgreSQL integration. It now relies on environment variables to establish a connection with a PostgreSQL database for storing and retrieving inventory data.
 
 ```
-docker run -p 3002:3002 -e POSTGRES_HOST=<postgres_host> -e POSTGRES_PORT=<postgres_port> -e POSTGRES_DB=<postgres_db> -e POSTGRES_USER=<postgres_user> -e POSTGRES_PASSWORD=<postgres_password> product-inventory-microservice
+docker run -p 3002:3002 -e POSTGRES_HOST=<postgres_host> -e POSTGRES_PORT=<postgres_port> -e POSTGRES_DB=<postgres_db> -e POSTGRES_USER=<postgres_user> -e POSTGRES_PASSWORD=<postgres_password> product-inventory
 ```
 
 ## Usage
@@ -14,7 +15,7 @@ docker run -p 3002:3002 -e POSTGRES_HOST=<postgres_host> -e POSTGRES_PORT=<postg
 To run a container from this image, use the following command:
 
 ```bash
-docker run -p 3002:3002 product-inventory-microservice
+docker run --name product-inventory -p 3002:3002 dntranstudy/product-inventory
 ```
 
 The microservice will be accessible at `http://localhost:3002`.
@@ -44,12 +45,12 @@ To enable communication between the Product Inventory microservice and other mic
 
 2. Run the Product Inventory microservice container with the `--network` flag:
    ```bash
-   docker run --network my-network -p 3002:3002 product-inventory-microservice
+   docker run --name product-inventory --network my-network -p 3002:3002 dntranstudy/product-inventory
    ```
 
 3. Run other microservice or application containers on the same network:
    ```bash
-   docker run --network my-network -p 4000:4000 ecommerce-ui
+   docker run --name ecommerce-ui --network my-network -p 4000:4000 dntranstudy/ecommerce-ui
    ```
 
 By connecting the containers to the same Docker network, they can communicate with each other using their container names as hostnames.
@@ -62,18 +63,10 @@ If you want to build the Docker image yourself, follow these steps:
 2. Navigate to the directory where the Dockerfile is located.
 3. Run the following command to build the image:
    ```bash
-   docker build -t product-inventory-microservice .
+   docker build -t dntranstudy/product-inventory .
    ```
-   This command will build the Docker image using the provided Dockerfile and tag it as `product-inventory-microservice`.
+   This command will build the Docker image using the provided Dockerfile and tag it as `dntranstudy/product-inventory`.
 
 ## Contributing
 
 If you would like to contribute to this project, please follow the guidelines in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
-## Support
-
-If you encounter any issues or have questions regarding this Docker image or the Product Inventory microservice, please [open an issue](https://github.com/your-repo/issues) on the GitHub repository.
