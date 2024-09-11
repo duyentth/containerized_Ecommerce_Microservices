@@ -1,4 +1,4 @@
-# Authentication Microservice
+# Authentication Microservice(Profile-Management)
 
 This Docker image provides an authentication microservice with user management functionality. It allows users to sign up, sign in, sign out, and update their profile information. It uses JSON Web Tokens (JWT) for authentication.
 
@@ -6,7 +6,7 @@ This Docker image provides an authentication microservice with user management f
 In version 2.0.0, the Authentication Microservice has been updated to include MySQL integration. It now relies on environment variables to establish a connection with a MySQL database for storing and retrieving user data.
 
 ```
-docker run -p 3003:3003 -e MYSQL_HOST=<mysql_host> -e MYSQL_PORT=<mysql_port> -e MYSQL_USER=<mysql_user> -e MYSQL_PASSWORD=<mysql_password> -e MYSQL_DATABASE=<mysql_database> authentication-microservice
+docker run -p 3003:3003 -e MYSQL_HOST=<mysql_host> -e MYSQL_PORT=<mysql_port> -e MYSQL_USER=<mysql_user> -e MYSQL_PASSWORD=<mysql_password> -e MYSQL_DATABASE=<mysql_database> profile-management
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ docker run -p 3003:3003 -e MYSQL_HOST=<mysql_host> -e MYSQL_PORT=<mysql_port> -e
 To run a container from this image, use the following command:
 
 ```bash
-docker run -p 3003:3003 authentication-microservice
+docker run --name profile-management -p 3003:3003 dntranstudy/profile-management
 ```
 
 The microservice will be accessible at `http://localhost:3003`.
@@ -46,12 +46,12 @@ To enable communication between the Authentication microservice and other micros
 
 2. Run the Authentication microservice container with the `--network` flag:
   ```bash
-  docker run --network my-network -p 3003:3003 authentication-microservice
+  docker run --name profile-management --network my-network -p 3003:3003 dntranstudy/profile-management
   ```
 
 3. Run other microservice or application containers on the same network:
   ```bash
-  docker run --network my-network -p 4000:4000 ecommerce-ui
+  docker run --name ecommerce-ui --network my-network -p 4000:4000 dntranstudy/ecommerce-ui
   ```
 
 By connecting the containers to the same Docker network, they can communicate with each other using their container names as hostnames.
@@ -64,18 +64,10 @@ If you want to build the Docker image yourself, follow these steps:
 2. Navigate to the directory where the Dockerfile is located.
 3. Run the following command to build the image:
   ```bash
-  docker build -t authentication-microservice .
+  docker build -t dntranstudy/profile-management .
   ```
-  This command will build the Docker image using the provided Dockerfile and tag it as `authentication-microservice`.
+  This command will build the Docker image using the provided Dockerfile and tag it as `dntranstudy/profile-management`.
 
 ## Contributing
 
 If you would like to contribute to this project, please follow the guidelines in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
-
-## License
-
-This project is licensed under the [MIT License](./LICENSE).
-
-## Support
-
-If you encounter any issues or have questions regarding this Docker image or the Authentication microservice, please [open an issue](https://github.com/your-repo/issues) on the GitHub repository.
