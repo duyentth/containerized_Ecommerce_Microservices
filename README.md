@@ -1,5 +1,5 @@
 # E-commerce Microservices
-This e-commerce application composes of 7 microservices, each built with different languages and frameworks.
+This e-commerce application is composed of 7 microservices, each built with different languages and frameworks.
 We containerize these services, manage their dependencies, and orchestrate the entire application using Docker Compose, and deploye it to the cloud.
 ## Prerequisites
 You need to installed Docker on your system
